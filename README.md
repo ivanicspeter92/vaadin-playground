@@ -1,35 +1,52 @@
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vaadin-flow/Lobby#?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+vaadin-playground
+==============
 
-# Beverage Buddy App Starter for Vaadin 11
-:coffee::tea::sake::baby_bottle::beer::cocktail::tropical_drink::wine_glass:
+Template for a simple Vaadin application that only requires a Servlet 3.0 container to run.
 
-This is a Vaadin 11 example Java application, used to demonstrate features of the Vaadin Flow Java framework.
 
-The easiest way of using it is via [https://vaadin.com/start](https://vaadin.com/start/v10-simple-ui) - you can choose the package naming you want.
+Workflow
+========
 
-The Starter demonstrates the core Vaadin Flow concepts:
-* Building UIs in Java with Components based on [Vaadin components](https://vaadin.com/components/browse), such as `TextField`, `Button`, `ComboBox`, `DatePicker`, `VerticalLayout` and `Grid` (see `CategoriesList`)
-* [Creating forms with `Binder`](https://github.com/vaadin/free-starter-flow/blob/master/documentation/using-binder-in-review-editor-dialog.asciidoc) (`ReviewEditorDialog`)
-* Making reusable Components on server side with `Composite` (`AbstractEditorDialog`)
-* [Creating a Component based on a HTML Template](https://github.com/vaadin/free-starter-flow/blob/master/documentation/polymer-template-based-view.asciidoc) (`ReviewsList`) 
-  * This template can be opened and edited with [the Vaadin Designer](https://vaadin.com/designer)
-* [Creating Navigation with the Router API](https://github.com/vaadin/free-starter-flow/blob/master/documentation/using-annotation-based-router-api.asciidoc) (`MainLayout`, `ReviewsList`, `CategoriesList`)
+To compile the entire project, run "mvn install".
 
-## Prerequisites
+To run the application, run "mvn jetty:run" and open http://localhost:8080/ .
 
-The project can be imported into the IDE of your choice, with Java 8 installed, as a Maven project.
+To produce a deployable production mode WAR:
+- change productionMode to true in the servlet class configuration (nested in the UI class)
+- run "mvn clean package"
+- test the war file with "mvn jetty:run-war"
 
-## Running the Project
+Client-Side compilation
+-------------------------
 
-1. Run using `mvn jetty:run`
-2. Wait for the application to start
-3. Open http://localhost:8080/ to view the application
+The generated maven project is using an automatically generated widgetset by default. 
+When you add a dependency that needs client-side compilation, the maven plugin will 
+automatically generate it for you. Your own client-side customizations can be added into
+package "client".
 
-## Documentation
+Debugging client side code
+  - run "mvn vaadin:run-codeserver" on a separate console while the application is running
+  - activate Super Dev Mode in the debug window of the application
 
-Brief introduction to the application parts can be found from the `documentation` folder. For Vaadin 10 documentation for Java users, see [Vaadin.com/docs](https://vaadin.com/docs/v10/flow/Overview.html).
+Developing a theme using the runtime compiler
+-------------------------
 
-### Branching information
-* `master` the latest version of the starter, using latest platform snapshot
-* `V10` the version for Vaadin 10
-* `V11` the version for Vaadin 11
+When developing the theme, Vaadin can be configured to compile the SASS based
+theme at runtime in the server. This way you can just modify the scss files in
+your IDE and reload the browser to see changes.
+
+To use the runtime compilation, open pom.xml and comment out the compile-theme 
+goal from vaadin-maven-plugin configuration. To remove a possibly existing 
+pre-compiled theme, run "mvn clean package" once.
+
+When using the runtime compiler, running the application in the "run" mode 
+(rather than in "debug" mode) can speed up consecutive theme compilations
+significantly.
+
+It is highly recommended to disable runtime compilation for production WAR files.
+
+Using Vaadin pre-releases
+-------------------------
+
+If Vaadin pre-releases are not enabled by default, use the Maven parameter
+"-P vaadin-prerelease" or change the activation default value of the profile in pom.xml .
