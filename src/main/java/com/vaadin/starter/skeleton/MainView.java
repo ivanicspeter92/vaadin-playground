@@ -1,7 +1,6 @@
 package com.vaadin.starter.skeleton;
 
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.PWA;
@@ -14,8 +13,19 @@ import com.vaadin.flow.server.PWA;
 public class MainView extends VerticalLayout {
 
     public MainView() {
-        Button button = new Button("Click me",
-                event -> Notification.show("Clicked!"));
-        add(button);
+        CustomerService service = CustomerService.getInstance();
+        Grid<Customer> grid = new Grid<>();
+
+        grid.setSizeFull();
+
+        grid.addColumn(Customer::getId).setHeader("ID");
+        grid.addColumn(Customer::getFirstName).setHeader("First name");
+        grid.addColumn(Customer::getLastName).setHeader("Last name");
+        grid.addColumn(Customer::getStatus).setHeader("Status");
+
+        add(grid);
+        setHeight("100vh");
+
+        grid.setItems(service.findAll());
     }
 }
