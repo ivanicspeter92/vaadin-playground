@@ -20,6 +20,7 @@ public class MainView extends VerticalLayout {
     private TextField filterText = new TextField();
     private Button clearFilterTextBtn = new Button(new Icon(VaadinIcon.CLOSE_CIRCLE));
     private Grid<Customer> grid = new Grid<>();
+    private CustomerForm form = new CustomerForm(this);
 
     public MainView() {
         configureFilterTextField();
@@ -28,9 +29,21 @@ public class MainView extends VerticalLayout {
 
         configureCustomerGrid();
         updateList();
-        add(filtering, grid);
+        add(form);
 
         setHeight("100vh");
+
+        grid.asSingleSelect().addValueChangeListener(event -> {
+            form.setCustomer(event.getValue());
+        });
+
+        Button addCustomerBtn = new Button("Add new customer");
+        addCustomerBtn.addClickListener(e -> {
+            grid.asSingleSelect().clear();
+            form.setCustomer(new Customer());
+        });
+        HorizontalLayout toolbar = new HorizontalLayout(filtering, addCustomerBtn);
+        add(toolbar, grid);
     }
 
     private void configureFilterTextField() {
@@ -52,7 +65,7 @@ public class MainView extends VerticalLayout {
         grid.addColumn(Customer::getStatus).setHeader("Status");
     }
 
-    private void updateList() {
+    public void updateList() {
         grid.setItems(CustomerService.getInstance().findAll(filterText.getValue()));
     }
 }
