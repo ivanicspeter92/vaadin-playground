@@ -1,52 +1,20 @@
-vaadin-playground
-==============
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vaadin-flow/Lobby#?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-Template for a simple Vaadin application that only requires a Servlet 3.0 container to run.
+# Skeleton Starter for Vaadin Flow
 
+This project can be used as a starting point to create your own Vaadin Flow application.
+It has the necessary dependencies and files to help you get started.
 
-Workflow
-========
+The best way to use it by via [vaadin.com/start](https://vaadin.com/start) - you can get only the necessary parts and choose the package naming you want to use.
+There is also a [getting started tutorial](https://vaadin.com/docs/v10/flow/introduction/tutorial-get-started.html) based on this project.
 
-To compile the entire project, run "mvn install".
+To access it directly from github, clone the repository and import the project to the IDE of your choice as a Maven project. You need to have Java 8 installed.
 
-To run the application, run "mvn jetty:run" and open http://localhost:8080/ .
+Run using `mvn jetty:run` and open [http://localhost:8080](http://localhost:8080) in browser.
 
-To produce a deployable production mode WAR:
-- change productionMode to true in the servlet class configuration (nested in the UI class)
-- run "mvn clean package"
-- test the war file with "mvn jetty:run-war"
+For a full Vaadin Flow application example, there is the Beverage Buddy App Starter for Flow available also from [vaadin.com/start](https://vaadin.com/start) page.
 
-Client-Side compilation
--------------------------
-
-The generated maven project is using an automatically generated widgetset by default. 
-When you add a dependency that needs client-side compilation, the maven plugin will 
-automatically generate it for you. Your own client-side customizations can be added into
-package "client".
-
-Debugging client side code
-  - run "mvn vaadin:run-codeserver" on a separate console while the application is running
-  - activate Super Dev Mode in the debug window of the application
-
-Developing a theme using the runtime compiler
--------------------------
-
-When developing the theme, Vaadin can be configured to compile the SASS based
-theme at runtime in the server. This way you can just modify the scss files in
-your IDE and reload the browser to see changes.
-
-To use the runtime compilation, open pom.xml and comment out the compile-theme 
-goal from vaadin-maven-plugin configuration. To remove a possibly existing 
-pre-compiled theme, run "mvn clean package" once.
-
-When using the runtime compiler, running the application in the "run" mode 
-(rather than in "debug" mode) can speed up consecutive theme compilations
-significantly.
-
-It is highly recommended to disable runtime compilation for production WAR files.
-
-Using Vaadin pre-releases
--------------------------
-
-If Vaadin pre-releases are not enabled by default, use the Maven parameter
-"-P vaadin-prerelease" or change the activation default value of the profile in pom.xml .
+Branching information:
+* `master` the latest version of the starter, using latest platform snapshot
+* `V10` the version for Vaadin 10
+* `V11` the version for Vaadin 11
